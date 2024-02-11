@@ -1,112 +1,91 @@
 #!/usr/bin/python3
-"""
-This module contains the entry point of the command interpreter.
-"""
+"""Module for HBNBCommand class."""
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """This class defines the command interpreter."""
     prompt = "(hbnb) "
 
-    def do_quit(self, arg):
-        """Quit command to exit the program."""
-        return True
-
-    def do_EOF(self, arg):
-        """EOF signal to exit the program."""
-        print("")
-        return True
-
-    def emptyline(self):
-        """Do nothing upon receiving an empty line."""
-        pass
-
     def do_create(self, arg):
-        """Create a new instance of BaseModel, saves it (to the JSON file) and prints the id."""
+        """Create command to create a new instance."""
         if not arg:
             print("** class name missing **")
             return
-
-        class_name = arg.split()[0]
-        if class_name not in ["BaseModel"]:
+        args = arg.split()
+        class_name = args[0]
+        if class_name not in {"BaseModel", "User"}:
             print("** class doesn't exist **")
             return
-
-        new_instance = BaseModel()
+        new_instance = eval(f"{class_name}()")
         new_instance.save()
         print(new_instance.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on the class name and id."""
-        args = arg.split()
+        """Show command to display string representation of an instance."""
         if not arg:
-            print("** class name missing **")
+            print("** instance id missing **")
             return
-        if args[0] not in ["BaseModel"]:
+        args = arg.split()
+        if args[0] not in {"BaseModel", "User"}:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
             return
-        key = "{}.{}".format(args[0], args[1])
-        all_objects = storage.all()
-        if key not in all_objects:
-            print("** no instance found **")
+        obj_dict = storage.all()
+        key = f"{args[0]}.{args[1]}"
+        if key in obj_dict:
+            print(obj_dict[key])
         else:
-            print(all_objects[key])
+            print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id (save the change into the JSON file)."""
-        args = arg.split()
+        """Destroy command to delete an instance."""
         if not arg:
             print("** class name missing **")
             return
-        if args[0] not in ["BaseModel"]:
+        args = arg.split()
+        if args[0] not in {"BaseModel", "User"}:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
             return
-        key = "{}.{}".format(args[0], args[1])
-        all_objects = storage.all()
-        if key not in all_objects:
-            print("** no instance found **")
-        else:
-            del all_objects[key]
+        obj_dict = storage.all()
+        key = f"{args[0]}.{args[1]}"
+        if key in obj_dict:
+            del obj_dict[key]
             storage.save()
+        else:
+            print("** no instance found **")
 
     def do_all(self, arg):
-        """Prints all string representation of all instances based or not on the class name."""
+        """All command to print string representations of all instances."""
+        obj_dict = storage.all()
+        if not arg:
+            print([str(obj) for obj in obj_dict.values()])
+            return
         args = arg.split()
-        if args and args[0] not in ["BaseModel"]:
+        if args[0] not in {"BaseModel", "User"}:
             print("** class doesn't exist **")
             return
-        all_objects = storage.all()
-        result = []
-        for key, value in all_objects.items():
-            if not args or key.split('.')[0] == args[0]:
-                result.append(str(value))
-        print(result)
+        print([str(obj) for key, obj in obj_dict.items() if key.startswith(args[0])])
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute."""
-        args = arg.split()
+        """Update command to update an instance."""
         if not arg:
             print("** class name missing **")
             return
-        if args[0] not in ["BaseModel"]:
+        args = arg.split()
+        if args[0] not in {"BaseModel", "User"}:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
             print("** instance id missing **")
-            return
-        key = "{}.{}".format(args[0], args[1])
-        all_objects = storage.all()
-        if key not in all_objects:
-            print("** no instance found **")
             return
         if len(args) < 3:
             print("** attribute name missing **")
@@ -114,9 +93,26 @@ class HBNBCommand(cmd.Cmd):
         if len(args) < 4:
             print("** value missing **")
             return
-        obj = all_objects[key]
-        setattr(obj, args[2], args[3])
-        obj.save()
+        obj_dict = storage.all()
+        key = f"{args[0]}.{args[1]}"
+        if key not in obj_dict:
+            print("** no instance found **")
+            return
+        setattr(obj_dict[key], args[2], args[3])
+        obj_dict[key].save()
+
+    def do_quit(self, arg):
+        """Quit command to exit the program."""
+        return True
+
+    def do_EOF(self, arg):
+        """EOF command to exit the program."""
+        return True
+
+    def emptyline(self):
+        """Called when an empty line is entered."""
+        pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
