@@ -23,5 +23,9 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing upon receiving an empty line."""
         pass
 
+    def help_help(self):
+        """Display help message for help command."""
+        print("Show help message for available commands.")
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
