@@ -37,5 +37,11 @@ class HBNBCommand(cmd.Cmd):
         """
         print("Exit the program.")
 
+    def emptyline(self):
+        """
+        Empty file
+        """
+        pass
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
