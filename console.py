@@ -3,6 +3,7 @@
 This module contains the entry point of the command interpreter.
 """
 import cmd
+import sys
 
 
 class HBNBCommand(cmd.Cmd):
@@ -23,9 +24,15 @@ class HBNBCommand(cmd.Cmd):
         """Do nothing upon receiving an empty line."""
         pass
 
-    def help_help(self):
-        """Display help message for help command."""
-        print("Show help message for available commands.")
+    def precmd(self, line):
+        """Execute a command when it is entered."""
+        if line == "python3 -m unittest discover tests":
+            return line
+        return cmd.Cmd.precmd(self, line)
+
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    if len(sys.argv) > 1 and sys.argv[1] == "-c":
+        HBNBCommand().onecmd(" ".join(sys.stdin.readlines()))
+    else:
+        HBNBCommand().cmdloop()
