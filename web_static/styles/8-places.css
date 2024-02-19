@@ -1,0 +1,35 @@
+/* styles/8-places.css */
+
+.price_by_night {
+    font-size: 30px;
+    color: #FF5A5F;
+    border: 4px solid #FF5A5F;
+    border-radius: 50%; /* Making it round */
+    width: 60px; /* Setting width to match height */
+    height: 60px;
+    text-align: center; /* Centering text */
+    line-height: 60px; /* Centering text vertically */
+    float: right; /* Floating it to the right */
+    margin-top: 10px; /* Adding some top margin for spacing */
+    margin-left: 10px; /* Adding some left margin for spacing */
+}
+
+.information {
+    height: 80px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+    align-items: center;
+}
+
+.information > div {
+    width: 100px;
+}
+
+.user {
+    margin-top: 10px;
+}
+
+.description {
+    margin-top: 10px;
+}
