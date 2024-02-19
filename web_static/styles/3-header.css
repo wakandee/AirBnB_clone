@@ -1,22 +1,17 @@
 /* styles/3-header.css */
 header {
-    color: white;
+    background-color: white;
     height: 70px;
     width: 100%;
     border-bottom: 1px solid #CCCCCC;
-    display: flex;
-    align-items: center;
 }
 
-header div {
+.logo {
+    width: 50px;
+    height: 50px;
+    background-image: url('../images/logo.png');
+    background-size: cover;
     margin-left: 20px;
-}
-
-.logo-placeholder {
-    width: 100px; /* Adjust width as needed */
-    height: 40px; /* Adjust height as needed */
-    background-image: url('../images/logo.png'); /* Specify the path to the logo image */
-    background-size: contain; /* Ensure the logo fits within the element */
-    background-repeat: no-repeat; /* Prevent the logo from repeating */
-    background-position: center; /* Center the logo within the element */
+    display: inline-block;
+    vertical-align: middle;
 }
