@@ -4,12 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AirBnb Clone</title>
+    <style type="text/css">
+        body{
+            padding: 0; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+        }
+        header{
+            background-color: #FF0000; 
+            height: 70px; 
+            width: 100%; 
+            flex-grow: 0;   
+        }
+
+        div{
+            flex-grow: 1;
+        }
+
+        footer{
+            background-color: #00FF00; 
+            height: 60px; 
+            width: 100%; 
+            flex-grow: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+    </style>
 </head>
-<body style="padding: 0; margin: 0; display: flex; flex-direction: column; min-height: 100vh;">
-    <header style="background-color: #FF0000; height: 70px; width: 100%; flex-grow: 0;"></header>
-    <div style="flex-grow: 1;"></div> <!-- Placeholder div to push footer to bottom -->
-    <footer style="background-color: #00FF00; height: 60px; width: 100%; flex-grow: 0; display: flex; justify-content: center; align-items: center;">
+<body>
+    <header></header>
+    <div></div> <!-- Placeholder div to push footer to bottom -->
+    <footer>
         <center>Best School</center>
     </footer>
 </body>
 </html>
+
